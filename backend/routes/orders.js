@@ -2,21 +2,31 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/order-model");
 
-router.post("/add", function (req, res, next) {
-  // Add a product
+// Add new order
+router.post("/add", async function (req, res, next) {
+  try {
+    const order = new Order({
+      user: req.body.user,
+      products: req.body.products,
+    });
 
-  const order = new Order({
-    user: req.body.user,
-    products: req.body.products,
-  });
-
-  order.save();
-  res.send(order);
-  console.log(order);
+    await order.save();
+    res.status(200).json(order);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err });
+  }
 });
 
-router.get("/all", function (req, res, next) {
-  // Show all products
+// Show all orders
+router.get("/all", async function (req, res, next) {
+  try {
+    const orders = await Order.find();
+    res.status(200).json(orders);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err });
+  }
 });
 
 module.exports = router;

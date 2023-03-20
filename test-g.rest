@@ -80,7 +80,7 @@ POST http://localhost:3000/api/orders/add
 Content-Type: application/json
 
 {
-  "user": "{{$getUsers.response.body.$[0].id}}",
+  "user": "{{getUsers.response.body.$[0].id}}",
       "products": [
     {
       "productId": "641845f3d9e002b5fd5e2ba1",
