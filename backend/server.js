@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
-const usersRoute = require("./routes/users.js");
-const productsRoute = require("./routes/products.js");
-const ordersRoute = require("./routes/orders.js");
+const usersRoute = require("./routes/users");
+const productsRoute = require("./routes/products");
+const ordersRoute = require("./routes/orders");
+const categoriesRoute = require("./routes/categories");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
@@ -14,6 +15,7 @@ app.use(cors());
 app.use("/api/users", usersRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/orders", ordersRoute);
+app.use("/api/categories", categoriesRoute);
 
 async function init() {
   try {

@@ -26,16 +26,33 @@ router.get("/:id", async function (req, res, next) {
 // Add a product
 router.post("/add", function (req, res, next) {
   try {
+    if (!req.body.token) {
+      return res.status(401).json({ message: "Token is required" });
+    }
     const product = new Product({
       name: req.body.name,
       price: req.body.price,
       description: req.body.description,
       lager: req.body.lager,
+      category: req.body.category,
+      token: req.body.token,
     });
 
     product.save();
 
     res.json(product);
+    console.log(product);
+  } catch (error) {
+    res.status(401).json({ message: "Error" });
+    console.log(error);
+  }
+});
+
+router.get("/category/:category", async function (req, res, next) {
+  try {
+    const category = req.params.category;
+    const foundProducts = await Product.find({ category: category });
+    res.status(200).json(foundProducts);
   } catch (error) {
     console.log(error);
   }

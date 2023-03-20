@@ -59,7 +59,7 @@ router.post("/login", async function (req, res, next) {
         user.isLoggedIn = true;
         res.json(user);
       } else {
-        res.json({ message: "Wrong password" });
+        res.status(401).json({ message: "Wrong password" });
       }
     }
   } catch (error) {
