@@ -3,13 +3,9 @@ var router = express.Router();
 const User = require("../models/user-model");
 const CryptoJS = require("crypto-js");
 
-/* GET home page. */
 router.get("/", async function (req, res, next) {
-  const users = await User.find();
+  const users = await User.find().select("-password");
   res.json(users);
-  console.log(users);
-
-  // Show all users, without passwords
 });
 
 router.post("/", async function (req, res, next) {
@@ -19,7 +15,6 @@ router.post("/", async function (req, res, next) {
   const foundUser = allUsers.find((user) => user._id === userId);
 
   res.json(foundUser);
-  console.log(foundUser);
 });
 
 router.post("/add", function (req, res, next) {
@@ -35,11 +30,23 @@ router.post("/add", function (req, res, next) {
   user.save();
 
   res.json(user);
-  console.log(user);
 });
 
-router.post("/login", function (req, res, next) {
-  // Login with email and password
+router.post("/login", async function (req, res, next) {
+  const user = await User.findOne({ email: req.body.email });
+  if (user) {
+    const decryptedPassword = CryptoJS.AES.decrypt(
+      user.password,
+      process.env.SALT
+    ).toString(CryptoJS.enc.Utf8);
+
+    if (decryptedPassword === req.body.password) {
+      user.isLoggedIn = true;
+      res.json(user);
+    } else {
+      res.json({ message: "Wrong password" });
+    }
+  }
 });
 
 module.exports = router;
