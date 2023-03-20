@@ -6,6 +6,7 @@
 # @name getUsers
 GET http://localhost:3000/api/users
 
+
 ###
 
 // HÄMTA SPECIFIK USER // SKICKA HELA OBJEKTET
@@ -53,7 +54,7 @@ GET http://localhost:3000/api/products
 ###
 
 // HÄMTA SPECIFIK PRODUKT
-GET http://localhost:3000/api/products/ // ID PÅ PRODUKT
+GET http://localhost:3000/api/products/64185ccbe90fcde9af5961b5
 
 ###
 
@@ -79,14 +80,14 @@ POST http://localhost:3000/api/orders/add
 Content-Type: application/json
 
 {
-  "user": "{{getUsers.response.body.$[0].id}}",
+  "user": "{{$getUsers.response.body.$[0].id}}",
       "products": [
     {
-      "productId": "// ID PÅ EN PRODUKT",
+      "productId": "641845f3d9e002b5fd5e2ba1",
       "quantity": 1
     },
     {
-      "productId": "// ID PÅ EN PRODUKT",
+      "productId": "64185ccbe90fcde9af5961b5",
       "quantity": 2
     }
   ]

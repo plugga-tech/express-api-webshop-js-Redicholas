@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user-model");
 const CryptoJS = require("crypto-js");
 
+// Show all users, hide password
 router.get("/", async function (req, res, next) {
   try {
     const users = await User.find().select("-password");
@@ -12,6 +13,7 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+// Show a single user by id
 router.post("/", async function (req, res, next) {
   try {
     const userId = req.body;
@@ -25,6 +27,7 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+// Add a user
 router.post("/add", function (req, res, next) {
   try {
     const user = new User({
@@ -42,6 +45,7 @@ router.post("/add", function (req, res, next) {
   } catch (error) {}
 });
 
+// Login
 router.post("/login", async function (req, res, next) {
   try {
     const user = await User.findOne({ email: req.body.email });
