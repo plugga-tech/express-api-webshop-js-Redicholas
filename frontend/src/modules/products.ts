@@ -1,5 +1,6 @@
-const app = document.getElementById('app') as HTMLDivElement;
 import { IProduct } from '../models/IProduct';
+
+const app = document.getElementById('app') as HTMLDivElement;
 
 export function getProducts(): Promise<IProduct[]> {
     return fetch('http://localhost:3000/api/products')

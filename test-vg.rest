@@ -23,8 +23,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Testrick Testsdottir",
-  "email": "testtrick@mail.com",
+  "name": "Testo",
+  "email": "testok@mail.com",
   "password": "test"
 }
 
@@ -35,7 +35,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "test3@mail.com",
+  "email": "testok@mail.com",
   "password": "test"
 }
 

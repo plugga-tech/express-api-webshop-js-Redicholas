@@ -7,7 +7,6 @@ require("dotenv").config();
 router.get("/", async function (req, res, next) {
   try {
     const products = await Product.find();
-    console.log(products);
     res.json(products);
   } catch (error) {
     console.log(error);

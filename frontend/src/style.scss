@@ -8,6 +8,15 @@ h1 {
     font-size: 2.5rem;
 }
 
+.login-btn {
+    position: absolute;
+    bottom: 10px;
+    border: none;
+    padding: 0.5rem 1rem;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
 .login-card {
     display: flex;
     flex-direction: column;
@@ -42,6 +51,11 @@ h1 {
         color: rgb(255, 255, 255);
         cursor: pointer;
     }
+
+    .register-btn {
+        cursor: pointer;
+        text-decoration: underline;
+    }
 }
 
 .product-card {
@@ -53,11 +67,10 @@ h1 {
     h2 {
         text-align: center;
         font-size: 1.5rem;
-        margin-bottom: 0.2rem;
     }
 
     .product-list {
-        border: 1px solid red;
+        border: 1px solid black;
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -65,7 +78,7 @@ h1 {
         gap: 0.5rem;
 
         .product-item {
-            border: 1px solid blue;
+            border: 1px solid black;
             width: 150px;
             padding: 1rem;
         }

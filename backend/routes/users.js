@@ -48,16 +48,19 @@ router.post("/add", function (req, res, next) {
     })
     .catch((err) => {
       if (err.name === "MongoServerError" && err.code === 11000) {
+        console.log(err);
         return res.status(400).json({
           message: "Email already in use.",
           data: { err },
         });
       }
+      console.log(err);
       return res.status(400).json({
         message: "You didn't give us what we want!",
         data: { err },
       });
     });
+  res.json(user);
 });
 
 //   user.save((err) => {
@@ -99,9 +102,12 @@ router.post("/login", async function (req, res, next) {
 
       if (decryptedPassword === req.body.password) {
         user.isLoggedIn = true;
-        res.json(user);
+        res
+          .status(200)
+          .json({ email: user.email, isLoggedIn: user.isLoggedIn });
       } else {
         res.status(401).json({ message: "Wrong password" });
+        return;
       }
     }
   } catch (error) {
