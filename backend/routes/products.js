@@ -35,7 +35,6 @@ router.post("/add", function (req, res, next) {
       description: req.body.description,
       lager: req.body.lager,
       category: req.body.category,
-      token: req.body.token,
     });
 
     product.save();

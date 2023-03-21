@@ -13,7 +13,7 @@ POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
-  "id": "// ID PÅ EN SPECIFIK USER"
+  "id": "6418404c7c1fec9fa79d21e0"
 }
 
 ###
@@ -23,8 +23,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Test Testsson",
-  "email": "test@mail.com",
+  "name": "Testan Testsson",
+  "email": "test3@mail.com",
   "password": "test"
 }
 
@@ -35,8 +35,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "// USER EMAIL",
-  "password": "// USER PASSWORD"
+  "email": "test3@mail.com",
+  "password": "test"
 }
 
 ###
@@ -51,7 +51,7 @@ GET http://localhost:3000/api/products
 ###
 
 // HÄMTA SPECIFIK PRODUKT
-GET http://localhost:3000/api/products/ // ID PÅ EN SPECIFIK PRODUKT
+GET http://localhost:3000/api/products/64185ccbe90fcde9af5961b5
 
 ###
 
@@ -60,18 +60,18 @@ POST http://localhost:3000/api/products/add
 Content-Type: application/json
 
 {
-  "name": "Produkt 2",
-  "description": "Beskrivning av produkt 1",
-  "price": 100,
-  "lager": 10,
-  "category": "// ID PÅ EN SPECIFIK KATEGORI",
+  "name": "Round Sunglasses",
+  "description": "Circly!",
+  "price": 899,
+  "lager": 15,
+  "category": "sunglasses",
   "token": "1234key1234"
 }
 
 ###
 
 // HÄMTA ALLA PRODUKTER FÖR EN SPECIFIK KATEGORI
-GET http://localhost:3000/api/products/category/ // ID PÅ EN SPECIFIK KATEGORI
+GET http://localhost:3000/api/products/category/skor
 ###
 
 //
@@ -84,7 +84,7 @@ POST http://localhost:3000/api/categories/add
 Content-Type: application/json
 
 {
-  "name": "Kategori 1",
+  "name": "sunglasses",
   "token": "1234key1234"
 }
 

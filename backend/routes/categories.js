@@ -31,11 +31,10 @@ router.post("/add", function (req, res, next) {
   }
 });
 
-router.get("/:category", function (req, res, next) {
+router.get("/:category", async function (req, res, next) {
   try {
-    Product.find({ category: req.params.category }).then(function (products) {
-      res.json(products);
-    });
+    const products = await Product.find({ category: req.params.category });
+    res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
