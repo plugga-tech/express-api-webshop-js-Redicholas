@@ -43,3 +43,31 @@ h1 {
         cursor: pointer;
     }
 }
+
+.product-card {
+    border: 1px solid black;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+
+    h2 {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .product-list {
+        border: 1px solid red;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 0.5rem;
+
+        .product-item {
+            border: 1px solid blue;
+            width: 150px;
+            padding: 1rem;
+        }
+    }
+}

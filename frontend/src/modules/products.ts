@@ -14,7 +14,7 @@ export function renderProductCard() {
     const productCard = `
         <div class="product-card">
             <h2>Our Products</h2>
-            <ul id="product-list"></ul>
+            <div id="product-list" class="product-list"></div>
         </div>
     `;
 
@@ -23,12 +23,12 @@ export function renderProductCard() {
 }
 
 function renderProductList() {
-    const productList = document.getElementById('product-list') as HTMLUListElement;
+    const productList = document.getElementById('product-list') as HTMLDivElement;
 
     getProducts().then(products => {
         products.forEach(product => {
             const productItem = `
-                <li>${product.name}</li>
+                <div class="product-item">${product.name}, ${product.description}, ${product.price}</div>
             `;
             productList.innerHTML += productItem;
         });
