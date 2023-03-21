@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product-model");
+require("dotenv").config();
 
 // Show all products
 router.get("/", async function (req, res, next) {
@@ -26,7 +27,7 @@ router.get("/:id", async function (req, res, next) {
 // Add a product
 router.post("/add", function (req, res, next) {
   try {
-    if (!req.body.token) {
+    if (req.body.token != process.env.TOKEN) {
       return res.status(401).json({ message: "Token is required" });
     }
     const product = new Product({
@@ -40,7 +41,6 @@ router.post("/add", function (req, res, next) {
     product.save();
 
     res.json(product);
-    console.log(product);
   } catch (error) {
     res.status(401).json({ message: "Error" });
     console.log(error);

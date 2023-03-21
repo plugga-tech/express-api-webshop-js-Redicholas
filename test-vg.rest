@@ -23,8 +23,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Testan Testsson",
-  "email": "test@mail.com",
+  "name": "Testrick Testsdottir",
+  "email": "testtrick@mail.com",
   "password": "test"
 }
 
@@ -60,10 +60,10 @@ POST http://localhost:3000/api/products/add
 Content-Type: application/json
 
 {
-  "name": "Round Sunglasses",
-  "description": "Circly!",
-  "price": 899,
-  "lager": 15,
+  "name": "Huge sunglasses",
+  "description": "Bugeye!",
+  "price": 799,
+  "lager": 20,
   "category": "sunglasses",
   "token": "1234key1234"
 }
@@ -84,7 +84,7 @@ POST http://localhost:3000/api/categories/add
 Content-Type: application/json
 
 {
-  "name": "sunglasses",
+  "name": "gloves",
   "token": "1234key1234"
 }
 
@@ -100,12 +100,12 @@ GET http://localhost:3000/api/categories
 //
 
 // HÄMTA ALLA ORDERS, KEY MÅSTE ANGES FÖR ATT FÅ TILLGÅNG TILL ORDERS
-GET http://localhost:3000/api/orders/all/ // API TOKEN
+GET http://localhost:3000/api/orders/all/1234key1234
 
 ###
 
 // HÄMTA ALLA ORDER, FEL KEY // SKALL MISSLYCKAS
-GET http://localhost:3000/api/orders/all/ // TEST MED FEL TOKEN
+GET http://localhost:3000/api/orders/all/felkey
 
 ###
 
@@ -114,14 +114,10 @@ POST http://localhost:3000/api/orders/add
 Content-Type: application/json
 
 {
-  "user": "// USER ID FÖR DEN SOM SKA SKAPA ORDERN",
+  "user": "6419c4029773748f3e22062c",
       "products": [
     {
-      "productId": "641983aef3ab325509c57a7a",
-      "quantity": 1
-    },
-    {
-      "productId": "64198321f3ab325509c57a6f",
+      "productId": "6419835cf3ab325509c57a72",
       "quantity": 2
     }
   ]
@@ -134,7 +130,7 @@ POST http://localhost:3000/api/orders/user
 Content-Type: application/json
 
 {
-    "user": "// USER ID FÖR DEN SOM SKA VISA ORDERS"
+    "user": "6419bd0c5ebfb0bacfdae5ce"
 }
 ###
 
@@ -143,7 +139,7 @@ POST http://localhost:3000/api/orders/user
 Content-Type: application/json
 
 {
-    "user": "// USER ID FÖR DEN SOM SKA VISA ORDERS",
+    "user": "6419c4029773748f3e22062c",
     "token": "1234key1234"
 }
 ###

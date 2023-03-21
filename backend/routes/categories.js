@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Category = require("../models/category-model");
 const Product = require("../models/product-model");
+require("dotenv").config();
 
 router.get("/", function (req, res, next) {
   try {
@@ -14,15 +15,13 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/add", function (req, res, next) {
+  if (req.body.token != process.env.TOKEN) {
+    return res.status(401).json({ message: "Token is required" });
+  }
   try {
     const category = new Category({
       name: req.body.name,
     });
-    const token = req.body.token;
-
-    if (!token) {
-      return res.status(401).json({ message: "Token is required" });
-    }
 
     category.save();
     res.json(category);

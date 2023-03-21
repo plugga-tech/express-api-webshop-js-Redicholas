@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/order-model");
 const Product = require("../models/product-model");
+require("dotenv").config();
 
 // Add new order
 router.post("/add", async function (req, res, next) {
@@ -46,6 +47,20 @@ router.get("/all", async function (req, res, next) {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err });
+  }
+});
+
+router.post("/user", async function (req, res, next) {
+  try {
+    if (req.body.token !== process.env.TOKEN) {
+      return res.status(401).json({ message: "Token is required" });
+    }
+
+    const userOrders = await Order.find({ user: req.body.user });
+    res.status(200).json(userOrders);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });
