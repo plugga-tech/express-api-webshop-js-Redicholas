@@ -13,7 +13,7 @@ POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
-  "id": "6418404c7c1fec9fa79d21e0"
+  "id": "64183f8ed2fbf5b59bee0c3d"
 }
 
 ###
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "name": "Testan Testsson",
-  "email": "test3@mail.com",
+  "email": "test@mail.com",
   "password": "test"
 }
 
@@ -51,7 +51,7 @@ GET http://localhost:3000/api/products
 ###
 
 // HÄMTA SPECIFIK PRODUKT
-GET http://localhost:3000/api/products/64185ccbe90fcde9af5961b5
+GET http://localhost:3000/api/products/64198321f3ab325509c57a6f
 
 ###
 
@@ -71,7 +71,7 @@ Content-Type: application/json
 ###
 
 // HÄMTA ALLA PRODUKTER FÖR EN SPECIFIK KATEGORI
-GET http://localhost:3000/api/products/category/skor
+GET http://localhost:3000/api/products/category/shoes
 ###
 
 //
@@ -117,11 +117,11 @@ Content-Type: application/json
   "user": "// USER ID FÖR DEN SOM SKA SKAPA ORDERN",
       "products": [
     {
-      "productId": "// ETT PRODUKT ID",
+      "productId": "641983aef3ab325509c57a7a",
       "quantity": 1
     },
     {
-      "productId": "// ETT PRODUKT ID",
+      "productId": "64198321f3ab325509c57a6f",
       "quantity": 2
     }
   ]

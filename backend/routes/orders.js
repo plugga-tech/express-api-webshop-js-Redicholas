@@ -1,20 +1,43 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/order-model");
+const Product = require("../models/product-model");
 
 // Add new order
 router.post("/add", async function (req, res, next) {
   try {
+    const productsOrdered = req.body.products;
+    let outOfStockProducts = [];
+
+    await Promise.all(
+      productsOrdered.map(async (product) => {
+        const foundProduct = await Product.findById(product.productId);
+        foundProduct.lager -= product.quantity;
+
+        if (foundProduct.lager < 0) {
+          foundProduct.lager = 0;
+          outOfStockProducts.push(foundProduct.name);
+          return;
+        }
+        await foundProduct.save();
+      })
+    );
+    if (outOfStockProducts.length > 0) {
+      res.json(outOfStockProducts);
+      return;
+    }
+
     const order = new Order({
       user: req.body.user,
       products: req.body.products,
     });
 
     await order.save();
-    res.status(200).json(order);
+
+    return res.status(200).json(order);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: err });
+    return res.status(500).json({ message: err });
   }
 });
 

@@ -29,21 +29,63 @@ router.post("/", async function (req, res, next) {
 
 // Add a user
 router.post("/add", function (req, res, next) {
-  try {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: CryptoJS.AES.encrypt(
-        req.body.password,
-        process.env.SALT
-      ).toString(),
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.SALT
+    ).toString(),
+  });
+
+  user
+    .save()
+    .then((result) => {
+      return res.status(201).json({
+        message: "Successful registration.",
+        data: { email: result.email },
+      });
+    })
+    .catch((err) => {
+      if (err.name === "MongoServerError" && err.code === 11000) {
+        return res.status(400).json({
+          message: "Email already in use.",
+          data: { err },
+        });
+      }
+      return res.status(400).json({
+        message: "You didn't give us what we want!",
+        data: { err },
+      });
     });
-
-    user.save();
-
-    res.json(user);
-  } catch (error) {}
 });
+
+//   user.save((err) => {
+//     console.log("NÅT GICK FEL!");
+//     if (err && err.code !== 11000) {
+//       console.log(err);
+//       console.log(err.code);
+//       res.json({ err });
+//       return;
+//     }
+//     if (err && err.code === 11000) {
+//       console.log("error", "User already exists");
+//       res.json({ err });
+//       return;
+//     }
+
+//     res.json({ ok });
+//   });
+//   res.json(user);
+// } catch (error) {
+//   console.log(error);
+//   // if (error.code === 11000) {
+//   //   res.status(409).json({ message: "Email already exists" });
+//   // } else {
+//   //   console.log(error);
+//   // }
+// }
+// });
 
 // Login
 router.post("/login", async function (req, res, next) {
