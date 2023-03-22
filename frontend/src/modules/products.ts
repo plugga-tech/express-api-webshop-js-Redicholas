@@ -6,9 +6,7 @@ export function getProducts(): Promise<IProduct[]> {
     return fetch('http://localhost:3000/api/products')
         .then(response => response.json())
         .then(data => {
-            console.log(data[0]._id);
             return data;
-            
         });
 }
 
@@ -40,18 +38,24 @@ function renderProductList() {
         const buyBtns = document.querySelectorAll('.buyBtn') as NodeListOf<HTMLButtonElement>;
         const removeBtns = document.querySelectorAll('.removeBtn') as NodeListOf<HTMLButtonElement>;
         
-        buyBtns.forEach(btn => {
-            btn.addEventListener('click', (event: MouseEvent) => {
-                const target = event.target as HTMLButtonElement;
-                console.log(target.id);
-            });
+        handleBuyRemoveBtnClick(buyBtns, removeBtns)
+    });
+}
+
+function handleBuyRemoveBtnClick(
+    buyBtns: NodeListOf<HTMLButtonElement>,
+    removeBtns: NodeListOf<HTMLButtonElement>) {
+    buyBtns.forEach(btn => {
+        btn.addEventListener('click', (event: MouseEvent) => {
+            const target = event.target as HTMLButtonElement;
+            console.log(target.id);
         });
-        
-        removeBtns.forEach(btn => {
-            btn.addEventListener('click', (event: MouseEvent) => {
-                const target = event.target as HTMLButtonElement;
-                console.log(target.id);
-            });
+    });
+    
+    removeBtns.forEach(btn => {
+        btn.addEventListener('click', (event: MouseEvent) => {
+            const target = event.target as HTMLButtonElement;
+            console.log(target.id);
         });
     });
 }

@@ -17,7 +17,7 @@ function fetchLogin(user: { email: string; password: string; }) {
         if (data.message === "Wrong password") alert("Wrong password")
         if (user) {
             renderProductCard();
-            // localStorage.setItem('email', user.email);
+            localStorage.setItem('email', user.email);
         }
     });
 }
@@ -57,5 +57,5 @@ export function renderLoginCard() {
 
     submitBtn?.addEventListener('click', getUser);
     registerBtn?.addEventListener('click', renderRegisterCard);
-    
 }
+
