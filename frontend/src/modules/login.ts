@@ -13,10 +13,11 @@ function fetchLogin(user: { email: string; password: string; }) {
     })
     .then(response => response.json())
     .then(data => {
+        if (data.message === "User not found") alert("User not found")
         if (data.message === "Wrong password") alert("Wrong password")
         if (user) {
             renderProductCard();
-            localStorage.setItem('email', user.email);
+            // localStorage.setItem('email', user.email);
         }
     });
 }
@@ -34,7 +35,7 @@ function getUser() {
 }
 
 export function renderLoginCard() {
-    // const storedUser = localStorage.getItem('username');
+    // const storedUser = localStorage.getItem('email');
     // if (storedUser) {
     //     renderProductCard();
     //     return;
@@ -42,7 +43,7 @@ export function renderLoginCard() {
     const loginCard = `
         <div class="login-card">
             <h2>Please log in</h2>
-            <input id="usernameInput" type="text" placeholder="Username" />
+            <input id="emailInput" type="text" placeholder="Email" />
             <input id="passwordInput" type="password" placeholder="Password" />
             <button id="submitBtn">Log in</button>
             <a id="registerBtn" class="register-btn">Register</a>
@@ -55,6 +56,6 @@ export function renderLoginCard() {
     const registerBtn = document.getElementById('registerBtn') as HTMLAnchorElement;
 
     submitBtn?.addEventListener('click', getUser);
-    registerBtn?.addEventListener('click', () => renderRegisterCard());
+    registerBtn?.addEventListener('click', renderRegisterCard);
     
 }

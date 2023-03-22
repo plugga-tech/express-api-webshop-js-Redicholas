@@ -38,22 +38,28 @@ function registerNewUser(password: string) {
         "password": password
     }
     console.log(user);
-    
 
     fetch("http://localhost:3000/api/users/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
             },
-            body: JSON.stringify( { user } )
+            body: JSON.stringify( user )
         })
         .then(response => response.json())
         .then(data => {
-            if (data.message != "Successful registration.") alert("Error creating user")
-            console.log(data);
+            console.log(data.message);
             
-            alert("User created");
-            renderProductCard();
+            if (data.message != "Successful registration.") {
+                alert("Error creating user")
+                console.log(data);
+            }
+            else {
+                console.log(data);
+
+                alert("User created");
+                renderProductCard();
+            }
         }
     );
 }

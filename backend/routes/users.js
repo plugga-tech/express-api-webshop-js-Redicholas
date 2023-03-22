@@ -60,35 +60,7 @@ router.post("/add", function (req, res, next) {
         data: { err },
       });
     });
-  res.json(user);
 });
-
-//   user.save((err) => {
-//     console.log("NÅT GICK FEL!");
-//     if (err && err.code !== 11000) {
-//       console.log(err);
-//       console.log(err.code);
-//       res.json({ err });
-//       return;
-//     }
-//     if (err && err.code === 11000) {
-//       console.log("error", "User already exists");
-//       res.json({ err });
-//       return;
-//     }
-
-//     res.json({ ok });
-//   });
-//   res.json(user);
-// } catch (error) {
-//   console.log(error);
-//   // if (error.code === 11000) {
-//   //   res.status(409).json({ message: "Email already exists" });
-//   // } else {
-//   //   console.log(error);
-//   // }
-// }
-// });
 
 // Login
 router.post("/login", async function (req, res, next) {
@@ -102,13 +74,18 @@ router.post("/login", async function (req, res, next) {
 
       if (decryptedPassword === req.body.password) {
         user.isLoggedIn = true;
-        res
-          .status(200)
-          .json({ email: user.email, isLoggedIn: user.isLoggedIn });
+        res.status(200).json({
+          name: user.name,
+          email: user.email,
+          isLoggedIn: user.isLoggedIn,
+        });
       } else {
         res.status(401).json({ message: "Wrong password" });
         return;
       }
+    } else {
+      res.status(401).json({ message: "User not found" });
+      return;
     }
   } catch (error) {
     console.log(error);
