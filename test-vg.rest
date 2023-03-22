@@ -23,8 +23,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Testo",
-  "email": "testok@mail.com",
+  "name": "Test321",
+  "email": "test321@mail.com",
   "password": "test"
 }
 
@@ -35,7 +35,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "testok@mail.com",
+  "email": "testok@mail.co",
   "password": "test"
 }
 
@@ -60,9 +60,9 @@ POST http://localhost:3000/api/products/add
 Content-Type: application/json
 
 {
-  "name": "Huge sunglasses",
-  "description": "Bugeye!",
-  "price": 799,
+  "name": "Tiny sunglasses",
+  "description": "Whos there?!",
+  "price": 499,
   "lager": 20,
   "category": "sunglasses",
   "token": "1234key1234"

@@ -6,7 +6,9 @@ export function getProducts(): Promise<IProduct[]> {
     return fetch('http://localhost:3000/api/products')
         .then(response => response.json())
         .then(data => {
+            console.log(data[0]._id);
             return data;
+            
         });
 }
 
@@ -26,11 +28,30 @@ function renderProductList() {
     const productList = document.getElementById('product-list') as HTMLDivElement;
 
     getProducts().then(products => {
-        products.forEach(product => {
+        products.forEach((product) => {
             const productItem = `
-                <div class="product-item">${product.name}, ${product.description}, ${product.price}</div>
+                <div class="product-item">${product.name}, ${product.description}, ${product.price}, 
+                    <button class="buyBtn" id="add-${product._id}">+</button>
+                    <button class="removeBtn" id="remove-${product._id}">-</button>
+                </div>
             `;
             productList.innerHTML += productItem;
+        });
+        const buyBtns = document.querySelectorAll('.buyBtn') as NodeListOf<HTMLButtonElement>;
+        const removeBtns = document.querySelectorAll('.removeBtn') as NodeListOf<HTMLButtonElement>;
+        
+        buyBtns.forEach(btn => {
+            btn.addEventListener('click', (event: MouseEvent) => {
+                const target = event.target as HTMLButtonElement;
+                console.log(target.id);
+            });
+        });
+        
+        removeBtns.forEach(btn => {
+            btn.addEventListener('click', (event: MouseEvent) => {
+                const target = event.target as HTMLButtonElement;
+                console.log(target.id);
+            });
         });
     });
 }

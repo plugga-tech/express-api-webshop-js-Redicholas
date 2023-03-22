@@ -37,7 +37,6 @@ function registerNewUser(password: string) {
         "email": emailInput,
         "password": password
     }
-    console.log(user);
 
     fetch("http://localhost:3000/api/users/add", {
         method: "POST",
@@ -47,16 +46,13 @@ function registerNewUser(password: string) {
             body: JSON.stringify( user )
         })
         .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-            
+        .then(data => {            
             if (data.message != "Successful registration.") {
                 alert("Error creating user")
                 console.log(data);
             }
             else {
                 console.log(data);
-
                 alert("User created");
                 renderProductCard();
             }
