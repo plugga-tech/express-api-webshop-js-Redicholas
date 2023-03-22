@@ -35,11 +35,7 @@ function getUser() {
 }
 
 export function renderLoginCard() {
-    // const storedUser = localStorage.getItem('email');
-    // if (storedUser) {
-    //     renderProductCard();
-    //     return;
-    // }
+
     const loginCard = `
         <div class="login-card">
             <h2>Please log in</h2>
