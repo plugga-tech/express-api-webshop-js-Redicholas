@@ -1,5 +1,5 @@
 import { IProduct } from '../models/IProduct';
-import { addProductToCart, removeProductFromCart } from './cart';
+import { addProductToCart, removeProductFromCart, renderCart } from './cart';
 import { renderOrderCard } from './orders';
 
 const app = document.getElementById('app') as HTMLDivElement;
@@ -51,6 +51,7 @@ export function renderProductCard() {
 
     renderProductList();
     renderCategorySelector();
+    renderCart();
 }
 
 function renderProductList() {

@@ -10,9 +10,13 @@ let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
     return { productId: product._id, quantity: 0 };
 });
 
-function renderCart() {
+export function renderCart() {
     const cart = document.getElementById('cart') as HTMLDivElement;
-    const cartProducts = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+    let cartProducts: ICartProduct[] = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+
+    if (cartProducts.length === 0) {
+        cartProducts = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as string) : [];
+    }
     
     cart.innerHTML = '';
     cartProducts.forEach((cartProduct: ICartProduct) => {
@@ -39,10 +43,14 @@ export async function addProductToCart(clickedProduct: string) {
     }});
     console.log(allCartProducts);
     
+    const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+    localStorage.setItem('cart', JSON.stringify(products));
+
     purchaseBtn.addEventListener('click', () => {
-        const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
         makePurchase(products);
     });
+    
+
     renderCart();
 }
 
@@ -51,7 +59,9 @@ export async function removeProductFromCart(clickedProduct: string) {
         if (product.productId === clickedProduct) {
             product.quantity -= 1;
     }});
-    console.log(allCartProducts);
+    const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+    localStorage.setItem('cart', JSON.stringify(products));
+
     renderCart();
 }
 
