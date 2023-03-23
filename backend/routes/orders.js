@@ -10,26 +10,26 @@ router.post("/add", async function (req, res, next) {
     const productsOrdered = req.body.products;
     let outOfStockProducts = [];
 
-    // TODO: Fix
-    // await Promise.all(
-    //   productsOrdered.map(async (product) => {
-    //     const foundProduct = await Product.findById(product.productId);
-    //     foundProduct.lager -= product.quantity;
+    await Promise.all(
+      productsOrdered.map(async (product) => {
+        const foundProduct = await Product.findById(product.productId);
+        foundProduct.lager -= product.quantity;
 
-    //     if (foundProduct.lager < 0) {
-    //       foundProduct.lager = 0;
-    //       outOfStockProducts.push(foundProduct.name);
-    //       return;
-    //     }
-    //     await foundProduct.save();
-    //   })
-    // );
+        if (foundProduct.lager < 0) {
+          foundProduct.lager = 0;
+          outOfStockProducts.push(foundProduct.name);
+          return;
+        }
+        await foundProduct.save();
+      })
+    );
 
-    // TODO: Leave message to user that some products are out of stock
-    // if (outOfStockProducts.length > 0) {
-    //   res.json(outOfStockProducts);
-    //   return;
-    // }
+    if (outOfStockProducts.length > 0) {
+      res.send(
+        "The following products are out of stock: " + outOfStockProducts
+      );
+      return;
+    }
 
     const order = new Order({
       user: req.body.user,

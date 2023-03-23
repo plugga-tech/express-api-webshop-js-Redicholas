@@ -60,11 +60,11 @@ POST http://localhost:3000/api/products/add
 Content-Type: application/json
 
 {
-  "name": "Tiny sunglasses",
-  "description": "Whos there?!",
-  "price": 499,
+  "name": "Fancy shoes",
+  "description": "Leather shoes",
+  "price": 1499,
   "lager": 20,
-  "category": "sunglasses",
+  "category": "shoes",
   "token": "1234key1234"
 }
 
@@ -84,7 +84,7 @@ POST http://localhost:3000/api/categories/add
 Content-Type: application/json
 
 {
-  "name": "gloves",
+  "name": "fake mustaches",
   "token": "1234key1234"
 }
 
