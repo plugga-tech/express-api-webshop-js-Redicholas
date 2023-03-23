@@ -14,7 +14,7 @@ POST http://localhost:3000/api/users/
 Content-Type: application/json
 
 {
-  "id": "641837ed7181cdd9a48bdbdf"
+  "id": "6419bd0c5ebfb0bacfdae5ce"
 }
 
 ###
@@ -24,8 +24,8 @@ POST http://localhost:3000/api/users/add
 Content-Type: application/json
 
 {
-  "name": "Andra Testsson",
-  "email": "test2@mail.com",
+  "name": "testtest Testsson",
+  "email": "testtest@mail.com",
   "password": "test"
 }
 
@@ -36,7 +36,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "test@mail.com",
+  "email": "testtest@mail.com",
   "password": "test"
 }
 
@@ -54,7 +54,7 @@ GET http://localhost:3000/api/products
 ###
 
 // HÄMTA SPECIFIK PRODUKT
-GET http://localhost:3000/api/products/64185ccbe90fcde9af5961b5
+GET http://localhost:3000/api/products/64198321f3ab325509c57a6f
 
 ###
 

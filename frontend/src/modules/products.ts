@@ -13,6 +13,14 @@ export function getProducts(): Promise<IProduct[]> {
         });
 }
 
+async function getUsers() {
+    return fetch("http://localhost:3000/api/users")
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
+
 export function renderProductCard() {
     const productCard = `
         <div class="product-card">
@@ -64,15 +72,7 @@ function handleBuyRemoveBtnClick(
     });
 }
 
-async function getUsers() {
-    return fetch("http://localhost:3000/api/users")
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        });
-}
-
-const products: ICartProduct[] = [];
+// const products: ICartProduct[] = [];
 const allProducts = await getProducts();
 let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
     return { productId: product._id, quantity: 0 };

@@ -13,13 +13,19 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+// TODO: Fix
 // Show a single user by id
 router.post("/", async function (req, res, next) {
   try {
-    const userId = req.body;
+    const userId = req.body.id;
+    console.log(userId);
     const allUsers = await User.find();
 
-    const foundUser = allUsers.find((user) => user._id === userId);
+    const foundUser = await allUsers.find((user) => user.id == userId);
+    console.log(foundUser);
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     res.json(foundUser);
   } catch (error) {

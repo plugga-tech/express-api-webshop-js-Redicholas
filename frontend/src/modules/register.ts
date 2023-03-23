@@ -29,11 +29,11 @@ function validatePassword() {
 }
 
 function registerNewUser(password: string) {
-    const usernameInput = document.getElementById('usernameInput') as HTMLInputElement;
+    const usernameInput = (document.getElementById('usernameInput') as HTMLInputElement).value;
     const emailInput = (document.getElementById('emailInput') as HTMLInputElement).value;
 
     const user = {
-        "name": usernameInput.value,
+        "name": usernameInput,
         "email": emailInput,
         "password": password
     }
