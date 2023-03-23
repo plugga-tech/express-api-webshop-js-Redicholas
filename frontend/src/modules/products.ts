@@ -71,13 +71,41 @@ function renderCategorySelector() {
         }
     });
 
+    categorySelector.append(new Option('All', 'All'));
     categoryList.forEach(category => {
         const option = document.createElement('option');
         option.value = category;
         option.textContent = category;
         categorySelector.append(option);
     });
-    console.log(categoryList);
+    categorySelector.addEventListener('change', () => {
+        sortByCategory();
+    }
+    );
+}
+
+function sortByCategory() {
+    const categorySelector = document.getElementById('category-selector') as HTMLSelectElement;
+    const selectedCategory = categorySelector.value;
+    const productList = document.getElementById('product-list') as HTMLDivElement;
+    productList.innerHTML = '';
+
+    if (selectedCategory === 'All') renderProductList();
+    allProducts.forEach(product => {
+        if (product.category === selectedCategory) {
+            const productItem = `
+                <div class="product-item">${product.name}, ${product.description}, ${product.price}, 
+                    <button class="buyBtn" id="${product._id}">+</button>
+                    <button class="removeBtn" id="${product._id}">-</button>
+                </div>
+            `;
+            productList.innerHTML += productItem;
+        }
+    });
+    const buyBtns = document.querySelectorAll('.buyBtn') as NodeListOf<HTMLButtonElement>;
+    const removeBtns = document.querySelectorAll('.removeBtn') as NodeListOf<HTMLButtonElement>;
+    
+    handleBuyRemoveBtnClick(buyBtns, removeBtns);
 }
 
 function handleBuyRemoveBtnClick(
