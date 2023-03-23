@@ -23,8 +23,12 @@ router.post("/add", function (req, res, next) {
       name: req.body.name,
     });
 
-    category.save();
-    res.json(category);
+    category.save().catch((error) => {
+      if (error.code === 11000) {
+        return res.status(400).json({ message: "Category already exists" });
+      }
+      return res.status(200).json(category);
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

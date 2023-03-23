@@ -40,18 +40,13 @@ router.post("/add", async function (req, res, next) {
       category: req.body.category,
     });
 
-    const allProducts = await Product.find();
-    const newProductName = req.body.name.toLowerCase();
-    const duplicateProduct = allProducts.find(
-      (product) => product.name.toLowerCase() === newProductName
-    );
-    if (duplicateProduct) {
-      return res.status(400).json({ message: "Product already exists" });
-    }
-
-    product.save();
-
-    res.json(product);
+    product.save().catch((error) => {
+      if (error.code === 11000) {
+        return res.status(400).json({ message: "Product already exists" });
+      }
+      res.json(product);
+      return res.status(200).json(product);
+    });
   } catch (error) {
     res.status(401).json({ message: "Error" });
     console.log(error);

@@ -57,6 +57,7 @@ function renderProductList() {
 function handleBuyRemoveBtnClick(
     buyBtns: NodeListOf<HTMLButtonElement>,
     removeBtns: NodeListOf<HTMLButtonElement>) {
+
     buyBtns.forEach(btn => {
         btn.addEventListener('click', (event: MouseEvent) => {
             const target = event.target as HTMLButtonElement;
@@ -74,12 +75,12 @@ function handleBuyRemoveBtnClick(
 
 // const products: ICartProduct[] = [];
 const allProducts = await getProducts();
-let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
-    return { productId: product._id, quantity: 0 };
-});
 
 async function addProductToCart(clickedProduct: string) {
     const purchaseBtn = document.getElementById('purchaseBtn') as HTMLButtonElement;
+    let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
+        return { productId: product._id, quantity: 0 };
+    });
 
     allCartProducts.forEach((product: ICartProduct) => {
         if (product.productId === clickedProduct) {
