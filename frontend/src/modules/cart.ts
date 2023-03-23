@@ -1,7 +1,8 @@
 import { IProduct } from '../models/IProduct';
 import { IOrder } from '../models/IOrder';
 import { ICartProduct } from '../models/ICartProduct';
-import { getProducts, getUsers } from './products';
+import { getProducts } from './products';
+import { getUsers } from './orders';
 
 const allProducts = await getProducts();
 const allUsers = await getUsers();
@@ -50,7 +51,6 @@ export async function addProductToCart(clickedProduct: string) {
         makePurchase(products);
     });
     
-
     renderCart();
 }
 

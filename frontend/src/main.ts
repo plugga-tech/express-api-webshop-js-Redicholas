@@ -8,4 +8,3 @@ loginBtn.addEventListener('click', () => {
 });
 
 renderProductCard();
-

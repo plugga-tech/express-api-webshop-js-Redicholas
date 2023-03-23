@@ -1,9 +1,25 @@
 import { IOrder } from '../models/IOrder';
-import { getOrders, getUsers, renderProductCard } from './products';
+import { renderProductCard } from './products';
 
 const allUsers = await getUsers();
 
 const app = document.getElementById('app') as HTMLDivElement;
+
+export async function getUsers() {
+    return fetch("http://localhost:3000/api/users")
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
+
+export async function getOrders() {
+    return fetch("http://localhost:3000/api/orders/all/1234key1234")
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
 
 export function renderOrderCard() {
     const orderCard = `

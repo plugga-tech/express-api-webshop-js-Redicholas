@@ -13,22 +13,6 @@ export function getProducts(): Promise<IProduct[]> {
         });
 }
 
-export async function getUsers() {
-    return fetch("http://localhost:3000/api/users")
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        });
-}
-
-export async function getOrders() {
-    return fetch("http://localhost:3000/api/orders/all/1234key1234")
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        });
-}
-
 export function renderProductCard() {
     const productCard = `
         <div class="product-card">
