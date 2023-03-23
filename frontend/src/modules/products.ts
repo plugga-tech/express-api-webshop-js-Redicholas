@@ -32,6 +32,7 @@ export function renderProductCard() {
             <h2>Our Products</h2>
             <select id="category-selector"></select>
             <div id="product-list" class="product-list"></div>
+            <div id="cart" class="cart"></div>
             <button id="purchaseBtn">Purchase</button>
         </div>
     `;
@@ -141,9 +142,30 @@ async function addProductToCart(clickedProduct: string) {
         const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
         makePurchase(products);
     });
+    renderCart();
 }
 
-// TODO: Fix multiple product array when adding multiple products
+function renderCart() {
+    const cart = document.getElementById('cart') as HTMLDivElement;
+    const cartProducts = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+    
+    cart.innerHTML = '';
+    cartProducts.forEach((cartProduct: ICartProduct) => {
+        let productName = "";
+        allProducts.forEach((product: IProduct) => {
+            if (product._id === cartProduct.productId) {
+                productName = product.name;
+            }
+            });
+            const productItem = `
+            <div class="product-item">${productName}, ${cartProduct.quantity}</div>
+            `;
+            
+            cart.innerHTML += productItem;
+    });
+}
+
+// TODO: Fix, multiple product array when adding multiple products
 async function makePurchase(products: ICartProduct[]) {
     const userEmail = localStorage.getItem('email');
     const user: string = allUsers.find((user: { email: string | null; }) => user.email === userEmail)._id;
