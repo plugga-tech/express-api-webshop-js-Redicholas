@@ -1,7 +1,5 @@
 import { IOrder } from '../models/IOrder';
-import { ICartProduct } from '../models/ICartProduct';
-import { getOrders } from './products';
-import { getUsers } from './products';
+import { getOrders, getUsers, renderProductCard } from './products';
 
 const allUsers = await getUsers();
 
@@ -12,10 +10,14 @@ export function renderOrderCard() {
         <div class="order-card">
             <h2>My Orders</h2>
             <div id="order-list" class="order-list"></div>
+            <button id="backBtn">Back</button>
         </div>
     `;    
 
     if (app) app.innerHTML = orderCard;
+    document.getElementById('backBtn')?.addEventListener('click', () => {
+        renderProductCard();
+    });
     renderOrderList();
 }
 
@@ -28,15 +30,14 @@ async function renderOrderList() {
     
     orders.forEach((order: IOrder) => {
         if (order.user === user) {
-        const products = [];
-        products.push(order.products.forEach((product: ICartProduct) => {
-            console.log(product.productId);
+            const products = [];
             
-            return product;
-        }));
+            for (let i = 0; i < order.products.length; i++) {
+                products.push(order.products[i].productId);
+            }
         
             const orderItem = `
-                <div class="order-item">User: ${order.user}, Products ordered: ${products}</div>
+                <div class="order-item">Products ordered: ${products}</div>
             `;
             orderList.innerHTML += orderItem;
         }}
