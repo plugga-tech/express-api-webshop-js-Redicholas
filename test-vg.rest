@@ -84,7 +84,7 @@ POST http://localhost:3000/api/categories/add
 Content-Type: application/json
 
 {
-  "name": "fake mustaches",
+  "name": "Pants",
   "token": "1234key1234"
 }
 

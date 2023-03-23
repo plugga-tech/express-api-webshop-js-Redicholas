@@ -75,7 +75,8 @@ function renderCategorySelector() {
     categoryList.forEach(category => {
         const option = document.createElement('option');
         option.value = category;
-        option.textContent = category;
+        const capitalizedCat = category[0].toUpperCase() + category.slice(1);
+        option.textContent = capitalizedCat;
         categorySelector.append(option);
     });
     categorySelector.addEventListener('change', () => {

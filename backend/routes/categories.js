@@ -20,7 +20,7 @@ router.post("/add", function (req, res, next) {
   }
   try {
     const category = new Category({
-      name: req.body.name,
+      name: req.body.name.toLowerCase(),
     });
 
     category.save().catch((error) => {
