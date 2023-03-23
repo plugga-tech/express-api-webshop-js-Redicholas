@@ -117,8 +117,8 @@ Content-Type: application/json
   "user": "641ae2f075caba1527efe90a",
   "products": [
     {
-      "productId": "6419835cf3ab325509c57a72",
-      "quantity": 100
+      "productId": "641c24c8ff8f17724ff62a7f",
+      "quantity": 1
     }
   ]
 }

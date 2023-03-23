@@ -46,9 +46,13 @@ router.post("/add", async function (req, res, next) {
 });
 
 // Show all orders
-router.get("/all", async function (req, res, next) {
+router.get("/all/:token", async function (req, res, next) {
   try {
+    if (req.params.token !== process.env.TOKEN) {
+      return res.status(401).json({ message: "Token is required" });
+    }
     const orders = await Order.find();
+    console.log(orders);
     res.status(200).json(orders);
   } catch (err) {
     console.log(err);

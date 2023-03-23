@@ -1,14 +1,11 @@
 import { IProduct } from '../models/IProduct';
 import { IOrder } from '../models/IOrder';
 import { ICartProduct } from '../models/ICartProduct';
+import { addProductToCart } from './cart';
 
 const app = document.getElementById('app') as HTMLDivElement;
 const allUsers = await getUsers();
-const allProducts = await getProducts();
-let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
-    return { productId: product._id, quantity: 0 };
-});
-
+export const allProducts = await getProducts();
 
 export function getProducts(): Promise<IProduct[]> {
     return fetch('http://localhost:3000/api/products')
@@ -18,8 +15,16 @@ export function getProducts(): Promise<IProduct[]> {
         });
 }
 
-async function getUsers() {
+export async function getUsers() {
     return fetch("http://localhost:3000/api/users")
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
+
+async function getOrders() {
+    return fetch("http://localhost:3000/api/orders/all/1234key1234")
         .then(response => response.json())
         .then(data => {
             return data;
@@ -32,12 +37,20 @@ export function renderProductCard() {
             <h2>Our Products</h2>
             <select id="category-selector"></select>
             <div id="product-list" class="product-list"></div>
-            <div id="cart" class="cart"></div>
+            <h3>Cart</h3>
+            <div id="cart" class="cart">Empty</div>
             <button id="purchaseBtn">Purchase</button>
+            <button id="showOrdersBtn">Show Orders</button>
         </div>
     `;
 
     if (app) app.innerHTML = productCard;
+
+    const showOrdersBtn = document.getElementById('showOrdersBtn') as HTMLButtonElement;
+    showOrdersBtn.addEventListener('click', () => {
+        renderOrderCard();
+    });
+
     renderProductList();
     renderCategorySelector();
 }
@@ -129,62 +142,38 @@ function handleBuyRemoveBtnClick(
     });
 }
 
-async function addProductToCart(clickedProduct: string) {
-    const purchaseBtn = document.getElementById('purchaseBtn') as HTMLButtonElement;
+function renderOrderCard() {
+    const orderCard = `
+        <div class="order-card">
+            <h2>My Orders</h2>
+            <div id="order-list" class="order-list"></div>
+        </div>
+    `;    
 
-    allCartProducts.forEach((product: ICartProduct) => {
-        if (product.productId === clickedProduct) {
-            product.quantity += 1;
-    }});
-    console.log(allCartProducts);
-    
-    purchaseBtn.addEventListener('click', () => {
-        const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
-        makePurchase(products);
-    });
-    renderCart();
+    if (app) app.innerHTML = orderCard;
+    renderOrderList();
 }
 
-function renderCart() {
-    const cart = document.getElementById('cart') as HTMLDivElement;
-    const cartProducts = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
-    
-    cart.innerHTML = '';
-    cartProducts.forEach((cartProduct: ICartProduct) => {
-        let productName = "";
-        allProducts.forEach((product: IProduct) => {
-            if (product._id === cartProduct.productId) {
-                productName = product.name;
-            }
-            });
-            const productItem = `
-            <div class="product-item">${productName}, ${cartProduct.quantity}</div>
-            `;
-            
-            cart.innerHTML += productItem;
-    });
-}
-
-// TODO: Fix, multiple product array when adding multiple products
-async function makePurchase(products: ICartProduct[]) {
+// TODO: fix products display
+async function renderOrderList() {
+    const orders = await getOrders();
+    const orderList = document.getElementById('order-list') as HTMLDivElement;
     const userEmail = localStorage.getItem('email');
     const user: string = allUsers.find((user: { email: string | null; }) => user.email === userEmail)._id;
-    console.log(products);
     
-    const order: IOrder = {
-        user,
-        products
-    }
-
-    fetch("http://localhost:3000/api/orders/add", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify( order )
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.message);
-    });
+    orders.forEach((order: IOrder) => {
+        if (order.user === user) {
+        const products = [];
+        products.push(order.products.forEach((product: ICartProduct) => {
+            console.log(product.productId);
+            
+            return product;
+        }));
+        
+            const orderItem = `
+                <div class="order-item">User: ${order.user}, Products ordered: ${products}</div>
+            `;
+            orderList.innerHTML += orderItem;
+        }}
+    );
 }
