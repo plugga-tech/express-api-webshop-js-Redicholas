@@ -46,6 +46,15 @@ export async function addProductToCart(clickedProduct: string) {
     renderCart();
 }
 
+export async function removeProductFromCart(clickedProduct: string) {
+    allCartProducts.forEach((product: ICartProduct) => {
+        if (product.productId === clickedProduct) {
+            product.quantity -= 1;
+    }});
+    console.log(allCartProducts);
+    renderCart();
+}
+
 // TODO: Fix, multiple product array when adding multiple products
 async function makePurchase(products: ICartProduct[]) {
     const userEmail = localStorage.getItem('email');

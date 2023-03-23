@@ -1,5 +1,6 @@
 import { IProduct } from '../models/IProduct';
-import { addProductToCart } from './cart';
+import { addProductToCart, removeProductFromCart } from './cart';
+import { renderOrderCard } from './orders';
 
 const app = document.getElementById('app') as HTMLDivElement;
 export const allProducts = await getProducts();
@@ -134,7 +135,7 @@ function handleBuyRemoveBtnClick(
     removeBtns.forEach(btn => {
         btn.addEventListener('click', (event: MouseEvent) => {
             const target = event.target as HTMLButtonElement;
-            // removeProductFromCart(target.id);
+            removeProductFromCart(target.id);
         });
     });
 }
