@@ -27,7 +27,7 @@ router.get("/:id", async function (req, res, next) {
 });
 
 // Add a product
-router.post("/add", function (req, res, next) {
+router.post("/add", async function (req, res, next) {
   try {
     if (req.body.token != process.env.TOKEN) {
       return res.status(401).json({ message: "Token is required" });
@@ -39,6 +39,15 @@ router.post("/add", function (req, res, next) {
       lager: req.body.lager,
       category: req.body.category,
     });
+
+    const allProducts = await Product.find();
+    const newProductName = req.body.name.toLowerCase();
+    const duplicateProduct = allProducts.find(
+      (product) => product.name.toLowerCase() === newProductName
+    );
+    if (duplicateProduct) {
+      return res.status(400).json({ message: "Product already exists" });
+    }
 
     product.save();
 
@@ -52,8 +61,11 @@ router.post("/add", function (req, res, next) {
 router.get("/category/:category", async function (req, res, next) {
   try {
     const category = req.params.category;
-    const foundProducts = await Product.find({ category: category });
-    res.status(200).json(foundProducts);
+    const foundCategory = await Product.find({ category: category });
+    if (foundCategory.length == 0) {
+      return res.status(404).json({ message: "No products in this category" });
+    }
+    res.status(200).json(foundCategory);
   } catch (error) {
     console.log(error);
   }
