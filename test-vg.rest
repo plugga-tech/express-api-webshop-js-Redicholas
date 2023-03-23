@@ -118,7 +118,7 @@ Content-Type: application/json
   "products": [
     {
       "productId": "6419835cf3ab325509c57a72",
-      "quantity": 1
+      "quantity": 100
     }
   ]
 }

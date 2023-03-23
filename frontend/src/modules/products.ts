@@ -3,7 +3,12 @@ import { IOrder } from '../models/IOrder';
 import { ICartProduct } from '../models/ICartProduct';
 
 const app = document.getElementById('app') as HTMLDivElement;
-// let products: IProduct[] = [];
+const allUsers = await getUsers();
+const allProducts = await getProducts();
+let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
+    return { productId: product._id, quantity: 0 };
+});
+
 
 export function getProducts(): Promise<IProduct[]> {
     return fetch('http://localhost:3000/api/products')
@@ -25,6 +30,7 @@ export function renderProductCard() {
     const productCard = `
         <div class="product-card">
             <h2>Our Products</h2>
+            <select id="category-selector"></select>
             <div id="product-list" class="product-list"></div>
             <button id="purchaseBtn">Purchase</button>
         </div>
@@ -32,6 +38,7 @@ export function renderProductCard() {
 
     if (app) app.innerHTML = productCard;
     renderProductList();
+    renderCategorySelector();
 }
 
 function renderProductList() {
@@ -54,10 +61,29 @@ function renderProductList() {
     });
 }
 
+function renderCategorySelector() {
+    const categorySelector = document.getElementById('category-selector') as HTMLSelectElement;
+    let categoryList: string[] = [];
+
+    allProducts.forEach(product => {
+        if ( !categoryList.includes(product.category) ) {
+            categoryList.push(product.category);
+        }
+    });
+
+    categoryList.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        categorySelector.append(option);
+    });
+    console.log(categoryList);
+}
+
 function handleBuyRemoveBtnClick(
     buyBtns: NodeListOf<HTMLButtonElement>,
     removeBtns: NodeListOf<HTMLButtonElement>) {
-
+    
     buyBtns.forEach(btn => {
         btn.addEventListener('click', (event: MouseEvent) => {
             const target = event.target as HTMLButtonElement;
@@ -73,14 +99,8 @@ function handleBuyRemoveBtnClick(
     });
 }
 
-// const products: ICartProduct[] = [];
-const allProducts = await getProducts();
-
 async function addProductToCart(clickedProduct: string) {
     const purchaseBtn = document.getElementById('purchaseBtn') as HTMLButtonElement;
-    let allCartProducts: ICartProduct[] = allProducts.map((product: IProduct) => {
-        return { productId: product._id, quantity: 0 };
-    });
 
     allCartProducts.forEach((product: ICartProduct) => {
         if (product.productId === clickedProduct) {
@@ -89,15 +109,17 @@ async function addProductToCart(clickedProduct: string) {
     console.log(allCartProducts);
     
     purchaseBtn.addEventListener('click', () => {
-        makePurchase(allCartProducts);
+        const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+        makePurchase(products);
     });
 }
 
+// TODO: Fix multiple product array when adding multiple products
 async function makePurchase(products: ICartProduct[]) {
     const userEmail = localStorage.getItem('email');
-    const allUsers = await getUsers();
     const user: string = allUsers.find((user: { email: string | null; }) => user.email === userEmail)._id;
-
+    console.log(products);
+    
     const order: IOrder = {
         user,
         products
@@ -112,6 +134,6 @@ async function makePurchase(products: ICartProduct[]) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        console.log(data.message);
     });
 }

@@ -25,9 +25,7 @@ router.post("/add", async function (req, res, next) {
     );
 
     if (outOfStockProducts.length > 0) {
-      res.send(
-        "The following products are out of stock: " + outOfStockProducts
-      );
+      res.json({ message: "Out of stock products: " + outOfStockProducts });
       return;
     }
 
@@ -38,7 +36,9 @@ router.post("/add", async function (req, res, next) {
 
     await order.save();
 
-    return res.status(200).json(order);
+    return res
+      .status(200)
+      .json({ order, message: "Order placed successfully" });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: err });
