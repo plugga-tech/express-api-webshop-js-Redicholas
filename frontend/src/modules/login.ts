@@ -4,6 +4,7 @@ import { renderRegisterCard } from '../modules/register';
 const app = document.getElementById('app') as HTMLDivElement;
 
 function fetchLogin(user: { email: string; password: string; }) {
+    localStorage.removeItem('email');
     fetch("http://localhost:3000/api/users/login", {
         method: "POST",
         headers: {

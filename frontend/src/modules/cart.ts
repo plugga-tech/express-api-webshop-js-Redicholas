@@ -45,6 +45,7 @@ export async function addProductToCart(clickedProduct: string) {
     console.log(allCartProducts);
     
     const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+    localStorage.removeItem('cart');
     localStorage.setItem('cart', JSON.stringify(products));
 
     purchaseBtn.addEventListener('click', () => {
@@ -59,8 +60,12 @@ export async function removeProductFromCart(clickedProduct: string) {
         if (product.productId === clickedProduct) {
             product.quantity -= 1;
     }});
-    const products = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
-    localStorage.setItem('cart', JSON.stringify(products));
+    const addedCartProducts = allCartProducts.filter((product: ICartProduct) => product.quantity > 0);
+    console.log(addedCartProducts);
+
+    // remove removes all
+    localStorage.removeItem('cart');
+    localStorage.setItem('cart', JSON.stringify(addedCartProducts));
 
     renderCart();
 }
@@ -69,7 +74,8 @@ export async function removeProductFromCart(clickedProduct: string) {
 async function makePurchase(products: ICartProduct[]) {
     const userEmail = localStorage.getItem('email');
     const user: string = allUsers.find((user: { email: string | null; }) => user.email === userEmail)._id;
-    console.log(products);
+    // console.log(user);
+    // TODO: Test
     
     const order: IOrder = {
         user,

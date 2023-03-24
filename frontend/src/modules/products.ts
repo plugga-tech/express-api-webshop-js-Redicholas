@@ -92,7 +92,7 @@ function sortByCategory() {
     allProducts.forEach(product => {
         if (product.category === selectedCategory) {
             const productItem = `
-                <div class="product-item">${product.name}, ${product.description}, ${product.price}, 
+                <div class="product-item">${product.name}, ${product.description}, ${product.price}
                     <button class="buyBtn" id="${product._id}">+</button>
                     <button class="removeBtn" id="${product._id}">-</button>
                 </div>
