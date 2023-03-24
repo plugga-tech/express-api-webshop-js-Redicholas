@@ -1,7 +1,8 @@
 import { IOrder } from '../models/IOrder';
-import { renderProductCard } from './products';
+import { renderProductCard, getProducts } from './products';
 
 const allUsers = await getUsers();
+const allProducts = await getProducts();
 
 const app = document.getElementById('app') as HTMLDivElement;
 
@@ -34,11 +35,11 @@ export function renderOrderCard() {
     document.getElementById('backBtn')?.addEventListener('click', () => {
         renderProductCard();
     });
-    renderOrderList();
+    renderOrderList(allUsers, allProducts);
 }
 
 // TODO: fix products display
-async function renderOrderList() {
+async function renderOrderList(allUsers: any, allProducts: { _id: string; name: string; }[]) {
     const orders = await getOrders();
     const orderList = document.getElementById('order-list') as HTMLDivElement;
     const userEmail = localStorage.getItem('email');
@@ -46,14 +47,23 @@ async function renderOrderList() {
     
     orders.forEach((order: IOrder) => {
         if (order.user === user) {
-            const products = [];
+            let usersOrderedProducts: string[] = [];
+            let productNames: string[] = [];
             
-            for (let i = 0; i < order.products.length; i++) {
-                products.push(order.products[i].productId);
-            }
-        
+            order.products.forEach((product: { productId: string; }) => {
+                usersOrderedProducts.push(product.productId);
+            });            
+            
+            usersOrderedProducts.forEach((productId: string) => {
+                allProducts.forEach((product: { _id: string; name: string; }) => {
+                    if (product._id == productId) {                        
+                        productNames.push(product.name);
+                    }
+                });
+            });
+            
             const orderItem = `
-                <div class="order-item">Products ordered: ${products}</div>
+                <div class="order-item">Products ordered: ${productNames}</div>
             `;
             orderList.innerHTML += orderItem;
         }}
