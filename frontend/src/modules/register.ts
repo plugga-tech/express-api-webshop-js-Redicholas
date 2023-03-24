@@ -24,11 +24,11 @@ function validatePassword() {
     const pwInput = passwordInput.value;
     const pwControlInput = passwordControlInput.value;
     
-    if (pwInput === pwControlInput) registerNewUser(pwInput);
+    if (pwInput === pwControlInput) makeNewUser(pwInput);
     else alert('Passwords do not match');
 }
 
-function registerNewUser(password: string) {
+function makeNewUser(password: string) {
     const usernameInput = (document.getElementById('usernameInput') as HTMLInputElement).value;
     const emailInput = (document.getElementById('emailInput') as HTMLInputElement).value;
 
@@ -38,24 +38,31 @@ function registerNewUser(password: string) {
         "password": password
     }
 
+    registerNewUser(user);
+}
+
+function registerNewUser(user: { name: string; email: string; password: string; }) {
     fetch("http://localhost:3000/api/users/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
-            },
-            body: JSON.stringify( user )
-        })
+        },
+        body: JSON.stringify(user)
+    })
         .then(response => response.json())
-        .then(data => {            
-            if (data.message != "Successful registration.") {
-                alert("Error creating user")
-                console.log(data);
-            }
-            else {
-                console.log(data);
-                alert("User created");
-                renderProductCard();
-            }
+        .then(data => {
+            handleRegistration(data);
         }
-    );
+        );
 }
+
+function handleRegistration(data: { message: string; }) {
+    if (data.message != "Successful registration.") {
+        alert("Error creating user");
+    }
+    else {
+        alert("User created");
+        renderProductCard();
+    }
+}
+
