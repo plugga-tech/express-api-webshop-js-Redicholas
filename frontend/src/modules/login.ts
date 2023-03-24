@@ -3,38 +3,6 @@ import { renderRegisterCard } from '../modules/register';
 
 const app = document.getElementById('app') as HTMLDivElement;
 
-function fetchLogin(user: { email: string; password: string; }) {
-    localStorage.removeItem('email');
-    fetch("http://localhost:3000/api/users/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify( user )
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message === "User not found") alert("User not found")
-        if (data.message === "Wrong password") alert("Wrong password")
-        if (user) {
-            renderProductCard();
-            localStorage.setItem('email', user.email);
-        }
-    });
-}
-
-function getUser() {
-    const emailInput = document.getElementById('emailInput') as HTMLInputElement;
-    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
-
-    const user = {
-        email: emailInput.value,
-        password: passwordInput.value
-    }
-    
-    fetchLogin(user);
-}
-
 export function renderLoginCard() {
 
     const loginCard = `
@@ -56,3 +24,34 @@ export function renderLoginCard() {
     registerBtn?.addEventListener('click', renderRegisterCard);
 }
 
+function getUser() {
+    const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+
+    const user = {
+        email: emailInput.value,
+        password: passwordInput.value
+    }
+    
+    fetchLogin(user);
+}
+
+function fetchLogin(user: { email: string; password: string; }) {
+    localStorage.removeItem('email');
+    fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify( user )
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === "User not found") alert("User not found")
+        if (data.message === "Wrong password") alert("Wrong password")
+        if (user) {
+            renderProductCard();
+            localStorage.setItem('email', user.email);
+        }
+    });
+}

@@ -1,5 +1,5 @@
-const app = document.getElementById('app') as HTMLDivElement;
 import { renderProductCard } from "./products";
+const app = document.getElementById('app') as HTMLDivElement;
 
 export function renderRegisterCard() {
     const registerCard = `

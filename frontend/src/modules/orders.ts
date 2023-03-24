@@ -70,5 +70,5 @@ function renderProductNames(order: IOrder, allProducts: { _id: string; name: str
     const orderItem = `
                 <div class="order-item">Products ordered: ${productNames}</div>
             `;
-    orderList.innerHTML += orderItem;
+    orderList.innerHTML = orderItem;
 }
