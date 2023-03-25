@@ -18,6 +18,7 @@ export function renderProductCard() {
         <div class="product-card">
             <h2>Our Products</h2>
             <select id="category-selector"></select>
+            <button id="addProductBtn">Add Product</button>
             <div id="product-list" class="product-list"></div>
             <h3>Cart</h3>
             <div id="cart" class="cart">Empty</div>
@@ -33,9 +34,76 @@ export function renderProductCard() {
         renderOrderCard();
     });
 
+    const addProductBtn = document.getElementById('addProductBtn') as HTMLButtonElement;
+    addProductBtn.addEventListener('click', () => {
+        renderAddProductCard();
+    });
+
     renderProductList();
     renderCategorySelector();
     renderCart();
+}
+
+function renderAddProductCard() {
+    const addProductCard = `
+        <div class="add-product-card">
+            <h2>Add Product</h2>
+            <h3>Admins only</h3>
+            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="description" placeholder="Description">
+            <input type="number" id="price" placeholder="Price">
+            <input type="number" id="lager" placeholder="Lager">
+            <input type="text" id="category" placeholder="Category">
+            <input type="test" id="token" placeholder="Token">
+            <button id="addProductBtn">Add Product</button>
+            <button id="backBtn">Back</button>
+        </div>
+    `;
+    if (app) app.innerHTML = addProductCard;
+
+    const backBtn = document.getElementById('backBtn') as HTMLButtonElement;
+    backBtn.addEventListener('click', () => {
+        renderProductCard();
+    });
+    
+    const addProductBtn = document.getElementById('addProductBtn') as HTMLButtonElement;
+    addProductBtn.addEventListener('click', () => {
+        getInputProduct();
+    });
+}
+
+function getInputProduct() {
+    const name = document.getElementById('name') as HTMLInputElement;
+    const description = document.getElementById('description') as HTMLInputElement;
+    const price = document.getElementById('price') as HTMLInputElement;
+    const lager = document.getElementById('lager') as HTMLInputElement;
+    const categoryInput = document.getElementById('category') as HTMLInputElement;
+    const tokenInput = document.getElementById('token') as HTMLInputElement;
+
+    const product: IProduct = {
+        name: name.value,
+        description: description.value,
+        price: (price.value as unknown as number),
+        lager: (lager.value as unknown as number),
+        category: categoryInput.value,
+        image: './img/placeholder.svg',
+        token: tokenInput.value
+    };
+
+    addProduct(product);
+}
+
+async function addProduct(product: IProduct) {
+    const response = await fetch('http://localhost:3000/api/products/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+    });
+    const data = await response.json();
+    console.log(data);
+    renderProductCard();
 }
 
 

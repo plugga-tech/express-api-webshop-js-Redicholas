@@ -6,4 +6,5 @@ export interface IProduct {
     lager: number;
     category: string;
     image: string;
+    token: string;
 }
