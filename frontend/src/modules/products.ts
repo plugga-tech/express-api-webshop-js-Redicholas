@@ -81,6 +81,7 @@ function getInputProduct() {
     const tokenInput = document.getElementById('token') as HTMLInputElement;
 
     const product: IProduct = {
+        _id: '',
         name: name.value,
         description: description.value,
         price: (price.value as unknown as number),
