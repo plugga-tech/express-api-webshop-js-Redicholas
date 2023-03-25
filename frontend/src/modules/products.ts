@@ -1,6 +1,7 @@
 import { IProduct } from '../models/IProduct';
 import { addProductToCart, removeProductFromCart, renderCart } from './cart';
 import { renderOrderCard } from './orders';
+import { renderFindUserCard } from './user';
 
 const app = document.getElementById('app') as HTMLDivElement;
 export const allProducts = await getProducts();
@@ -19,6 +20,7 @@ export function renderProductCard() {
             <h2>Our Products</h2>
             <select id="category-selector"></select>
             <button id="addProductBtn">Add Product</button>
+            <button id="findUserBtn">Find User</button>
             <div id="product-list" class="product-list"></div>
             <h3>Cart</h3>
             <div id="cart" class="cart">Empty</div>
@@ -37,6 +39,11 @@ export function renderProductCard() {
     const addProductBtn = document.getElementById('addProductBtn') as HTMLButtonElement;
     addProductBtn.addEventListener('click', () => {
         renderAddProductCard();
+    });
+
+    const findUserBtn = document.getElementById('findUserBtn') as HTMLButtonElement;
+    findUserBtn.addEventListener('click', () => {
+        renderFindUserCard();
     });
 
     renderProductList();
