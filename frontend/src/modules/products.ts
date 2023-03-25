@@ -14,10 +14,19 @@ export function getProducts(): Promise<IProduct[]> {
         });
 }
 
+function getLoggedinUser() {
+    const userEmail = localStorage.getItem('email');
+    if (userEmail) {
+        return 'Logged in as: ' + userEmail;
+    }
+    return 'Not logged in';
+}
+
 export function renderProductCard() {
     const productCard = `
         <div class="product-card">
             <h2>Our Products</h2>
+            <h3>${getLoggedinUser()}</h3>
             <select id="category-selector"></select>
             <button id="addProductBtn">Add Product</button>
             <button id="findUserBtn">Find User</button>
@@ -62,8 +71,10 @@ function renderAddProductCard() {
             <input type="number" id="lager" placeholder="Lager">
             <input type="text" id="category" placeholder="Category">
             <input type="test" id="token" placeholder="Token">
-            <button id="addProductBtn">Add Product</button>
-            <button id="backBtn">Back</button>
+            <div>
+                <button id="addProductBtn">Add Product</button>
+                <button id="backBtn">Back</button>
+            </div>
         </div>
     `;
     if (app) app.innerHTML = addProductCard;

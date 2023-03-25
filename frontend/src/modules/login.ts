@@ -4,7 +4,6 @@ import { renderRegisterCard } from '../modules/register';
 const app = document.getElementById('app') as HTMLDivElement;
 
 export function renderLoginCard() {
-
     const loginCard = `
         <div class="login-card">
             <h2>Please log in</h2>
@@ -55,3 +54,11 @@ function fetchLogin(user: { email: string; password: string; }) {
         }
     });
 }
+
+function logout() {
+    localStorage.removeItem('email');
+    renderProductCard();
+}
+
+const logoutBtn = document.getElementById('logoutBtn') as HTMLButtonElement;
+logoutBtn?.addEventListener('click', logout);

@@ -29,6 +29,7 @@ router.post("/add", function (req, res, next) {
       }
       return res.status(200).json(category);
     });
+    res.json({ message: "Category added successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
