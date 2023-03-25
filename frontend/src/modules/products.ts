@@ -38,13 +38,17 @@ export function renderProductCard() {
     renderCart();
 }
 
+
 function renderProductList() {
     const productList = document.getElementById('product-list') as HTMLDivElement;
+    const productImage = "src/img/placeholder.svg"
 
     getProducts().then(products => {
         products.forEach((product) => {
             const productItem = `
-                <div class="product-item">${product.name}, ${product.description}, ${product.price}, 
+                <div class="product-item">
+                    <img src="${productImage}" alt="${product.name}">
+                    ${product.name}, ${product.description}, ${product.price}, 
                     <button class="buyBtn" id="${product._id}">+</button>
                     <button class="removeBtn" id="${product._id}">-</button>
                 </div>
